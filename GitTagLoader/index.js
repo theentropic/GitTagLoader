@@ -39,7 +39,7 @@ var tl = require("azure-pipelines-task-lib/task");
 var shell = require("shelljs");
 function run() {
     return __awaiter(this, void 0, void 0, function () {
-        var lines, prefix, filter, cmd, tag, annot;
+        var lines, prefix, filter, cmd, exec, tag, annot;
         return __generator(this, function (_a) {
             try {
                 lines = tl.getInput('lines', true);
@@ -54,18 +54,24 @@ function run() {
                     return [2 /*return*/];
                 }
                 cmd = 'git describe --tags --abbrev=0';
-                if (filter !== '' || filter.toLowerCase() !== 'latest')
+                if (filter !== '' && filter.toLowerCase() !== 'latest')
                     cmd += " --match " + filter;
-                tag = shell.exec(cmd, { silent: true }).stdout;
-                if (tag === '') {
-                    tl.setResult(tl.TaskResult.Failed, "Specified tag " + filter + " not found", true);
+                exec = shell.exec(cmd, { silent: true });
+                if (exec.code !== 0) {
+                    tl.setResult(tl.TaskResult.Failed, exec.stderr, true);
                     return [2 /*return*/];
                 }
+                tag = exec.stdout.replace(/[\r\n]$/, '');
                 tl.setVariable(prefix + "Tag.Label", tag);
-                console.log("Found tag", tag);
-                annot = shell.exec("git tag -n" + lines + " \"" + tag + "\"").stdout;
+                console.debug("Found tag", tag);
+                exec = shell.exec("git tag -n" + lines + " \"" + tag + "\"", { silent: true });
+                if (exec.code !== 0) {
+                    tl.setResult(tl.TaskResult.Failed, exec.stderr, true);
+                    return [2 /*return*/];
+                }
+                annot = exec.stdout.replace(/\s*$/, '').replace(new RegExp("^" + tag + "\\s*"), '').replace(/^[ ]*/gm, '');
                 tl.setVariable(prefix + "Tag.Annotation", annot);
-                tl.setResult(tl.TaskResult.Succeeded, "Finished processing", true);
+                tl.setResult(tl.TaskResult.Succeeded, '', true);
             }
             catch (err) {
                 tl.setResult(tl.TaskResult.Failed, err.message);

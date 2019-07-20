@@ -18,21 +18,28 @@ async function run() {
         }
 
         let cmd = 'git describe --tags --abbrev=0';
-        if (filter !== '' || filter.toLowerCase() !== 'latest')
+        if (filter !== '' && filter.toLowerCase() !== 'latest')
             cmd += ` --match ${filter}`;
 
-        const tag = shell.exec(cmd, { silent: true }).stdout;
-        if (tag === '') {
-            tl.setResult(tl.TaskResult.Failed, `Specified tag ${filter} not found`, true);
+        let exec = shell.exec(cmd, { silent: true });
+        if (exec.code !== 0) {
+            tl.setResult(tl.TaskResult.Failed, exec.stderr, true);
             return;
         }
-        
-        tl.setVariable(`${prefix}Tag.Label`, tag);
-        console.log(`Found tag`, tag);
+        const tag = exec.stdout.replace(/[\r\n]$/, '');
 
-        const annot = shell.exec(`git tag -n${lines} "${tag}"`).stdout;
+        tl.setVariable(`${prefix}Tag.Label`, tag);
+        console.debug(`Found tag`, tag);
+
+        exec = shell.exec(`git tag -n${lines} "${tag}"`, { silent: true });
+        if (exec.code !== 0) {
+            tl.setResult(tl.TaskResult.Failed, exec.stderr, true);
+            return;
+        }
+
+        const annot = exec.stdout.replace(/\s*$/, '').replace(new RegExp(`^${tag}\\s*`), '').replace(/^[ ]*/gm, '');
         tl.setVariable(`${prefix}Tag.Annotation`, annot);
-        tl.setResult(tl.TaskResult.Succeeded, `Finished processing`, true);
+        tl.setResult(tl.TaskResult.Succeeded, '', true);
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err.message);
