@@ -28,6 +28,14 @@
             "defaultValue": "100",
             "required": true,
             "helpMarkDown": "The number of lines to grab from the tag"
+        },
+        {
+            "name": "prefix",
+            "type": "string",
+            "label": "Variables Prefix",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Each variable generated will be prefixed with this value. For example: 'MyPrefix.' results in: #(MyPrefix.Tag.Label)"
         }
     ],
     "execution": {
