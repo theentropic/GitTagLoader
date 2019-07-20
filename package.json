@@ -1,0 +1,20 @@
+{
+  "name": "git-tag-loader",
+  "version": "1.0.0",
+  "description": "This loads a tag from git and places it in variables for use in other build tasks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "azure-pipelines-task-lib": "^2.8.0",
+    "shelljs": "^0.8.3"
+  },
+  "devDependencies": {
+    "@types/node": "^12.6.8",
+    "@types/q": "^1.5.2",
+    "@types/shelljs": "^0.8.5"
+  }
+}

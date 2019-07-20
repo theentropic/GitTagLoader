@@ -1,0 +1,38 @@
+{
+    "id": "765f249c-959b-49ff-8409-8e07b94216c4",
+    "name": "gittagloader",
+    "friendlyName": "Git Tag Loader",
+    "description": "This task will load the first specified tag from the list of tags on the current branch, and store the annotation and label in variables for use in other tasks",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "author": "theentropic",
+    "version": {
+        "Major": 0,
+        "Minor": 1,
+        "Patch": 0
+    },
+    "instanceNameFormat": "git tag $(filter)",
+    "inputs": [
+        {
+            "name": "filter",
+            "type": "string",
+            "label": "Tag Filter",
+            "defaultValue": "Latest",
+            "required": true,
+            "helpMarkDown": "The filter used to search for the tag, if nothing or 'Latest' is specified, this will grab the first tag it can find"
+        },
+        {
+            "name": "lines",
+            "type": "string",
+            "label": "Number of Lines",
+            "defaultValue": "100",
+            "required": true,
+            "helpMarkDown": "The number of lines to grab from the tag"
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "index.js"
+        }
+    }
+}
