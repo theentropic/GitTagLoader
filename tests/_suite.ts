@@ -1,15 +1,16 @@
 import * as path from 'path';
 import * as assert from 'assert';
 import * as ttm from 'azure-pipelines-task-lib/mock-test';
+import * as shell from 'shelljs';
 
 describe('Tag Loader Tests', function () {
 
     before(function () {
-
+        shell.exec(`git tag -a TestTag -m "Here is a test tag for unit testing"`);
     });
 
     after(() => {
-
+        shell.exec(`git tag -d TestTag`);
     });
 
     it('should succeed with latest tag', function (done: MochaDone) {

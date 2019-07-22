@@ -10,10 +10,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var path = __importStar(require("path"));
 var assert = __importStar(require("assert"));
 var ttm = __importStar(require("azure-pipelines-task-lib/mock-test"));
+var shell = __importStar(require("shelljs"));
 describe('Tag Loader Tests', function () {
     before(function () {
+        shell.exec("git tag -a TestTag -m \"Here is a test tag for unit testing\"");
     });
     after(function () {
+        shell.exec("git tag -d TestTag");
     });
     it('should succeed with latest tag', function (done) {
         // Add success test here
@@ -55,7 +58,6 @@ describe('Tag Loader Tests', function () {
         var tp = path.join(__dirname, 'lines.js');
         var tr = new ttm.MockTestRunner(tp);
         tr.run();
-        console.log(tr.succeeded);
         assert.equal(tr.succeeded, false, 'should have failed');
         assert.equal(tr.warningIssues, 0, "should have no warnings");
         assert.equal(tr.errorIssues.length, 1, "should have 1 error issue");
