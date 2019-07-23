@@ -88,4 +88,4 @@ typings/
 .dynamodb/
 
 .taskkey
-theentropic.git-tag-loader-0.1.0.vsix
+**.vsix

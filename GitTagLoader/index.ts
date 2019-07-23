@@ -29,7 +29,7 @@ async function run() {
         const tag = exec.stdout.replace(/[\r\n]$/, '');
 
         tl.setVariable(`${prefix}Tag.Label`, tag);
-        console.debug(`Found tag`, tag);
+        console.log(`Setting variable Tag.Label to`, tag);
 
         exec = shell.exec(`git tag -n${lines} "${tag}"`, { silent: true });
         if (exec.code !== 0) {
@@ -37,8 +37,14 @@ async function run() {
             return;
         }
 
-        const annot = exec.stdout.replace(/\s*$/, '').replace(new RegExp(`^${tag}\\s*`), '').replace(/^[ ]*/gm, '');
+        let annot = exec.stdout.replace(/\s*$/, '').replace(new RegExp(`^${tag}\\s*`), '').replace(/^[ ]*/gm, '');
         tl.setVariable(`${prefix}Tag.Annotation`, annot);
+        console.log(`Setting variable Tag.Annotation to`, annot);
+
+        annot = annot.replace(/(\r\n|\r|\n)/gi, '<br>');
+        tl.setVariable(`${prefix}Tag.Annotation.Html`, annot);
+        console.log(`Setting variable Tag.Annotation.Html to`, annot);
+        
         tl.setResult(tl.TaskResult.Succeeded, '', true);
     }
     catch (err) {

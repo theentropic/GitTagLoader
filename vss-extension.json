@@ -2,17 +2,34 @@
     "manifestVersion": 1,
     "id": "git-tag-loader",
     "name": "Git Tag Loader",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "publisher": "theentropic",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
         }
     ],    
+    "public": true,
     "description": "This task will load the first specified tag from the list of tags on the current branch, and store the annotation and label in variables for use in other tasks.",
     "categories": [
         "Azure Pipelines"
     ],
+    "content": {
+        "details": {
+            "path": "README.md"
+        },
+        "license": {
+            "path": "LICENSE"
+        }
+    },
+    "links": {
+        "getstarted": {
+          "uri": "https://github.com/theentropic/GitTagLoader"
+        },
+        "support": {
+          "uri": "https://github.com//theentropic/GitTagLoader/issues"
+        }
+      },
     "icons": {
         "default": "images/extension-icon.png"        
     },
@@ -21,6 +38,10 @@
             "path": "GitTagLoader"
         }
     ],
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/theentropic/GitTagLoader"
+    },
     "contributions": [
         {
             "id": "git-tag-loader",

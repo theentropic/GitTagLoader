@@ -29,3 +29,4 @@ $(Tag.Label)
 |----------|-------------|
 | Tag.Label | The name of the tag. |
 | Tag.Annotation | The annotation of the tag, if one exists |
+| Tag.Annotation.Html | The annotation of the tag, with linebreaks replaced with `<br>` tags |

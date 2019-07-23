@@ -5,13 +5,13 @@
     "description": "This task will load the first specified tag from the list of tags on the current branch, and store the annotation and label in variables for use in other tasks",
     "helpMarkDown": "",
     "category": "Utility",
-    "author": "theentropic",
+    "author": "Entropic Solutions",
     "version": {
-        "Major": 0,
-        "Minor": 1,
+        "Major": 1,
+        "Minor": 0,
         "Patch": 0
     },
-    "instanceNameFormat": "git tag $(filter)",
+    "instanceNameFormat": "Load tag with filter '$(filter)'",
     "inputs": [
         {
             "name": "filter",
@@ -19,7 +19,7 @@
             "label": "Tag Filter",
             "defaultValue": "Latest",
             "required": true,
-            "helpMarkDown": "The filter used to search for the tag, if nothing or 'Latest' is specified, this will grab the first tag it can find"
+            "helpMarkDown": "The filter used to search for the tag, if nothing or 'latest' is specified, this will grab the most recent tag it can find"
         },
         {
             "name": "lines",
