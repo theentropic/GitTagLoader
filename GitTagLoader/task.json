@@ -36,6 +36,14 @@
             "defaultValue": "",
             "required": false,
             "helpMarkDown": "Each variable generated will be prefixed with this value. For example: 'MyPrefix.' results in: #(MyPrefix.Tag.Label)"
+        },
+        {
+            "name": "markdown",
+            "type": "boolean",
+            "label": "Annotation is Markdown",
+            "defaultValue": false,
+            "required": true,
+            "helpMarkDown": "If true, we will parse the annotation text as Markdown when returning the #(Tag.Annotation.Html)"
         }
     ],
     "execution": {

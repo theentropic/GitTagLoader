@@ -1,11 +1,13 @@
 import tl = require('azure-pipelines-task-lib/task');
 import shell = require('shelljs');
+import showdown = require('showdown');
 
 async function run() {
     try {
         const lines: string = tl.getInput('lines', true);
         const prefix: string = tl.getInput('prefix', false) || '';
         let filter: string = tl.getInput('filter', true);
+        const markdown: boolean = tl.getBoolInput('markdown', false) || false;
         
         if (!parseInt(lines, 10)) {
             tl.setResult(tl.TaskResult.Failed, `lines parameter must be a valid number`, true);
@@ -41,9 +43,16 @@ async function run() {
         tl.setVariable(`${prefix}Tag.Annotation`, annot);
         console.log(`Setting variable Tag.Annotation to`, annot);
 
-        annot = annot.replace(/(\r\n|\r|\n)/gi, '<br>');
-        tl.setVariable(`${prefix}Tag.Annotation.Html`, annot);
-        console.log(`Setting variable Tag.Annotation.Html to`, annot);
+        if (markdown) {
+            const converter = new showdown.Converter();
+            annot = converter.makeHtml(annot);
+            tl.setVariable(`${prefix}Tag.Annotation.Html`, annot);
+            console.log(`Setting variable Tag.Annotation.Html to`, annot);
+        } else {
+            annot = annot.replace(/(\r\n|\r|\n)/gi, '<br>');
+            tl.setVariable(`${prefix}Tag.Annotation.Html`, annot);
+            console.log(`Setting variable Tag.Annotation.Html to`, annot);    
+        }
         
         tl.setResult(tl.TaskResult.Succeeded, '', true);
     }
