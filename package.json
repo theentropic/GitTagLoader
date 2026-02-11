@@ -9,7 +9,7 @@
   "author": "Entropic Solutions",
   "license": "MIT",
   "dependencies": {
-    "azure-pipelines-task-lib": "^2.8.0",
+    "azure-pipelines-task-lib": "^5.2.6",
     "shelljs": "^0.8.5"
   },
   "devDependencies": {
